@@ -1,0 +1,49 @@
+//颜色
+$c-theme: #48c5ff; //主题色
+$c-bg: #FEFEFC; //背景色
+
+$c-black: #333; // 黑色
+$c-red: #FF7978; //红色
+$c-green: #20d56e; //绿色
+$c-gray: #b1b1b1; //灰色
+$c-brown: #AC5E07; //棕色
+
+//主题色
+//第一关
+$c-lv1-title:#D45745;
+$c-lv1-bg:#FCDADA;
+
+//第二关
+$c-lv2-title:#7DBE84;
+$c-lv2-light: #e4fce7;   //浅绿色
+$c-lv2-dark: #7dbe84;   //深绿色
+
+//第三关
+$c-lv3-title:#0F8DBD;
+$c-lv3-light: #e2f6fd;   //浅蓝色
+$c-lv3-normal: #4BC6FF; //暂时没用
+$c-lv3-dark: #0f8dbd;   //深蓝色
+
+//第四关
+$c-lv4-light: #f2eeff;   //
+$c-question-light: #E5E8FE;   //高亮
+$c-question-normal: #A2A3FF;   //普通
+$c-question-dark: #7480E2;   //深暗
+
+//第四、五、六关、章末测试、神秘关卡-错题订正
+$c-lv4-title: $c-question-dark;
+$c-lv4-normal: #c7b7f8;   //普通
+$c-lv4-dark: #896cc0;   //深暗
+
+//神秘关卡-知识重温
+$c-lv9-title:#E89D63;
+
+
+//字号
+$lg: 34px;
+$md: 24px;
+$xs: 20px;
+
+
+
+

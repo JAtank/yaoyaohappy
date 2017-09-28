@@ -1,0 +1,9 @@
+@import "variables";
+
+$baseFontSize: 40px !default;
+
+@function getImg($path){  //获取图片
+  @return url("~IMAGES/" + $path + ".webp");
+}
+
+
