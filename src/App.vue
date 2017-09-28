@@ -28,5 +28,8 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "~SCSS/index";
-
+  #app{
+    width: 1200px;
+    height: 800px;
+  }
 </style>

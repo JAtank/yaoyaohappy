@@ -59,12 +59,11 @@
   "main": "./index.html",
   "window": {
     "title": "nw-vue-webpack2",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
+    "resizable":false,
     "width": 1200,
-    "height": 800,
-    "min_width": 800,
-    "min_height": 500
+    "height": 800
   },
   "webkit": {
     "plugin": true
