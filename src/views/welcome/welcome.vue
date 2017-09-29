@@ -7,7 +7,7 @@
         <div class="entering">手动录入</div>
         <div class="import">
           文件导入
-          <input type="file"></input>
+          <input type="file" accept="application/vnd.ms-excel" @change="getFile()" ref="inputFile">
         </div>
       </div>
       <div class="down"></div>
@@ -15,8 +15,9 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import XLSX from 'xlsx'; //引入依赖模块
     export default {
-        name: '',
+        name: 'welcome',
         components: {},
         created(){
 
@@ -24,11 +25,30 @@
         props: {},
         data(){
             return {
-                apiData: {}
+              apiData: {},
+              msg:''
             }
         },
         computed: {},
-        methods: {}
+        methods: {
+            getFile(){
+                console.log("文件路径为："+this.$refs.inputFile.value);
+                try {
+                  var workbook = XLSX.readFile(this.$refs.inputFile.value); //读取文件
+                  var workSheet = workbook.Sheets[workbook.SheetNames[0]]; //获取工作薄中的单个表（初期设定为第一个表）
+                  var workData=XLSX.utils.sheet_to_json(workSheet,{header:1}); //获取第一列且转换为Json
+                  console.log(workData);
+                  //构建本地数据库
+                }catch(err){
+                    console.log("文件格式错误")
+                }
+            },
+            creatDB(name){ //创建本地数据库
+//                var request=window.indexedDB.open(name);
+
+
+            }
+        },
     };
 </script>
 
