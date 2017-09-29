@@ -47,27 +47,32 @@
                       }
                       stuList.push(stuObj);
                   }
-                  this.creatDB("stuName",stuList)
+                  this.createdDB("stuName",stuList);
                 }catch(err){
-                  console.log("文件格式错误")
+                  console.log("文件格式错误");
                 }
             },
-            creatDB(name,list){ //创建本地数据库
+            createdDB(name,list){ //创建本地数据库
                 var db;
-                var request=window.indexedDB.open(name);
-                request.onerror = function(event) {
+                var request=window.indexedDB.open(name); //打开指定名称的数据库，如果不存在，则创建
+                request.onerror = function(event) {     //打开失败提示
                   alert("Why didn't you allow my web app to use IndexedDB?!");
                 };
-                request.onsuccess = function(event) {
+                request.onsuccess = function(event) { //打开成功
                   db = request.result;
                 };
-                request.onupgradeneeded=function(event){
+                request.onupgradeneeded=function(event){ //只能在这里进行数据库数据操作
                   db=event.target.result;
                   if(!db.objectStoreNames.contains('student')){
                     var student = db.createObjectStore('student',{keyPath: "index"});
                     for(let i in list){
                         student.add(list[i]);
                     }
+                    db.close();
+                  }else {
+                      db.deleteObjectStore('student');
+                      db.close();
+                      this.creatDB(name,list);
                   }
                 }
             },

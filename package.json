@@ -12,7 +12,8 @@
   "dependencies": {
     "nw": "^0.25.3",
     "vue": "^2.4.2",
-    "vue-router": "^2.7.0"
+    "vue-router": "^2.7.0",
+    "vuex": "^2.4.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -61,7 +62,7 @@
     "title": "nw-vue-webpack2",
     "toolbar": false,
     "frame": true,
-    "resizable":false,
+    "resizable": false,
     "width": 1200,
     "height": 800
   },
