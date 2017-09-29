@@ -39,15 +39,38 @@
                   var workData=XLSX.utils.sheet_to_json(workSheet,{header:1}); //获取第一列且转换为Json
                   console.log(workData);
                   //构建本地数据库
+                  let stuList=[];
+                  for(let i=0;i<workData.length;i++){
+                      let stuObj={
+                          index:i,
+                          name:workData[i][0]
+                      }
+                      stuList.push(stuObj);
+                  }
+                  this.creatDB("stuName",stuList)
                 }catch(err){
-                    console.log("文件格式错误")
+                  console.log("文件格式错误")
                 }
             },
-            creatDB(name){ //创建本地数据库
-//                var request=window.indexedDB.open(name);
-
-
-            }
+            creatDB(name,list){ //创建本地数据库
+                var db;
+                var request=window.indexedDB.open(name);
+                request.onerror = function(event) {
+                  alert("Why didn't you allow my web app to use IndexedDB?!");
+                };
+                request.onsuccess = function(event) {
+                  db = request.result;
+                };
+                request.onupgradeneeded=function(event){
+                  db=event.target.result;
+                  if(!db.objectStoreNames.contains('student')){
+                    var student = db.createObjectStore('student',{keyPath: "index"});
+                    for(let i in list){
+                        student.add(list[i]);
+                    }
+                  }
+                }
+            },
         },
     };
 </script>
