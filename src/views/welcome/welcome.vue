@@ -10,7 +10,9 @@
           <input type="file" accept="application/vnd.ms-excel" @change="getFile()" ref="inputFile">
         </div>
       </div>
-      <div class="down"></div>
+      <div class="down">
+        <div class="down-btn" @click="toNext()">已经拥有数据，继续操作</div>
+      </div>
       <md_add_student v-if="isShowMdAddStu" @sure="toSure"></md_add_student>
     </div>
 </template>
@@ -70,7 +72,6 @@
                   },500);
                 };
                 this.request.onupgradeneeded=function(event){
-                  console.log("111");
                   db=event.target.result;
                   if(db.objectStoreNames.contains('student')){
                     db.deleteObjectStore('student');
@@ -112,22 +113,25 @@
                       if(cursor){
                          num++;
                          cursor.continue();
-                         console.log(num+"+++++++++++");
                       }else {
                         for(let i=0;i<msgList.length-1;i++){
                           let stuObj={
                             index:num+i,
                             name:msgList[i]
                           }
-                          console.log("++++++++");
                           store.add(stuObj);
                         }
-                        alert('录入成功！！')
+                        alert('录入成功！！');
+                        setTimeout(() => {
+                            db.close();
+                        },500)
                       }
                   }
                 }
             },
-
+            toNext(){
+              this.$router.push('/home')
+            }
         },
     };
 </script>
@@ -167,9 +171,16 @@
         }
       }
       .down{
+        @include center;
         width: 100%;
         height: 50%;
         background-color: #7480E2;
+        .down-btn{
+          font-size: 18px;
+          background-color: white;
+          padding: 10px;
+          border-radius: 20px;
+        }
       }
     }
 </style>

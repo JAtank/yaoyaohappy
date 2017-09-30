@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import Vlf from 'vlf'
 
 Vue.use(Vlf);
@@ -10,9 +11,9 @@ Vue.use(Vlf);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
+window.vue = new Vue({
   router,
-  template: '<App/>',
-  components: { App }
-})
+  store,
+  render: h => h(App)
+});
+window.vue.$mount('#app');
