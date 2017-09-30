@@ -4,40 +4,38 @@
 <template>
     <div class="welcome">
       <div class="up">
-        <div class="entering">手动录入</div>
+        <div class="entering" @click="toShowMdAdd()">手动录入</div>
         <div class="import">
           文件导入
           <input type="file" accept="application/vnd.ms-excel" @change="getFile()" ref="inputFile">
         </div>
       </div>
       <div class="down"></div>
+      <md_add_student v-if="isShowMdAddStu" @sure="toSure"></md_add_student>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
   import XLSX from 'xlsx'; //引入依赖模块
+  import md_add_student from './md/md_add_stu.vue'
     export default {
         name: 'welcome',
-        components: {},
-        created(){
-
-        },
+        components: {md_add_student},
+        created(){},
         props: {},
         data(){
             return {
-              apiData: {},
-              msg:''
+              request:{},
+              isShowMdAddStu:false,
             }
         },
         computed: {},
         methods: {
             getFile(){
-                console.log("文件路径为："+this.$refs.inputFile.value);
                 try {
                   var workbook = XLSX.readFile(this.$refs.inputFile.value); //读取文件
                   var workSheet = workbook.Sheets[workbook.SheetNames[0]]; //获取工作薄中的单个表（初期设定为第一个表）
                   var workData=XLSX.utils.sheet_to_json(workSheet,{header:1}); //获取第一列且转换为Json
-                  console.log(workData);
                   //构建本地数据库
                   let stuList=[];
                   for(let i=0;i<workData.length;i++){
@@ -47,35 +45,89 @@
                       }
                       stuList.push(stuObj);
                   }
-                  this.createdDB("stuName",stuList);
+                  this.createdDB(stuList);
                 }catch(err){
                   console.log("文件格式错误");
                 }
             },
-            createdDB(name,list){ //创建本地数据库
-                var db;
-                var request=window.indexedDB.open(name); //打开指定名称的数据库，如果不存在，则创建
-                request.onerror = function(event) {     //打开失败提示
+            createdDB(list){ //创建本地数据库
+                let db;
+                let version = window.localStorage.getItem('version');
+                if(version){
+                    version++;
+                }else {
+                    version = 1;
+                }
+                this.request = window.indexedDB.open('stuName',version);
+                window.localStorage.setItem('version',version);
+                this.request.onerror=function(event){
                   alert("Why didn't you allow my web app to use IndexedDB?!");
                 };
-                request.onsuccess = function(event) { //打开成功
-                  db = request.result;
-                };
-                request.onupgradeneeded=function(event){ //只能在这里进行数据库数据操作
+                this.request.onsuccess=function(event){
                   db=event.target.result;
-                  if(!db.objectStoreNames.contains('student')){
-                    var student = db.createObjectStore('student',{keyPath: "index"});
-                    for(let i in list){
-                        student.add(list[i]);
-                    }
-                    db.close();
-                  }else {
-                      db.deleteObjectStore('student');
+                  setTimeout(() => {
                       db.close();
-                      this.creatDB(name,list);
+                  },500);
+                };
+                this.request.onupgradeneeded=function(event){
+                  console.log("111");
+                  db=event.target.result;
+                  if(db.objectStoreNames.contains('student')){
+                    db.deleteObjectStore('student');
+                  }
+                  let student = db.createObjectStore('student',{keyPath: "index"});
+                  for(let i in list){
+                    student.add(list[i]);
+                  }
+                  alert("导入成功");
+                };
+            },
+            toShowMdAdd(){
+                this.isShowMdAddStu = true;
+            },
+            toSure(msg){
+                this.isShowMdAddStu = false;
+                if(!msg){
+                  alert('输入内容为空！！');
+                  return;
+                }else if(msg.indexOf('；')==-1){
+                  alert('输入姓名的格式错误！！');
+                  return;
+                }
+                let msgList=msg.split('；');
+                let db;
+                let version = window.localStorage.getItem('version');
+                this.request = window.indexedDB.open('stuName',version);
+                this.request.onerror=function(event){
+                  alert("Why didn't you allow my web app to use IndexedDB?!");
+                };
+                this.request.onsuccess=function(event){
+                  db=event.target.result;
+                  let transaction=db.transaction('student','readwrite');
+                  let store=transaction.objectStore('student');
+                  let cursorObj=store.openCursor();//db为IDBDatabase对象
+                  let num = 0;
+                  cursorObj.onsuccess=function (e) {
+                      let cursor = e.target.result;
+                      if(cursor){
+                         num++;
+                         cursor.continue();
+                         console.log(num+"+++++++++++");
+                      }else {
+                        for(let i=0;i<msgList.length-1;i++){
+                          let stuObj={
+                            index:num+i,
+                            name:msgList[i]
+                          }
+                          console.log("++++++++");
+                          store.add(stuObj);
+                        }
+                        alert('录入成功！！')
+                      }
                   }
                 }
             },
+
         },
     };
 </script>

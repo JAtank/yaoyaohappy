@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vlf from 'vlf'
+
+Vue.use(Vlf);
 
 Vue.config.productionTip = false
 
