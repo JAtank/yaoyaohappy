@@ -3,10 +3,13 @@
 */
 <template>
     <div class="home">
-      <div class="content" v-if="isFinish"><!--v-show="isFinish" v-for="item in stuList"-->
-        <!--<p>item.name</p>-->
-        <!--<p>item.index</p>-->
+      <div class="content" v-if="isFinish">
+        <div class="stu-content"  v-for="item in stuList">
+          <p>{{item.name}}</p>
+          <p>{{item.index}}</p>
+        </div>
       </div>
+      <div class="check-btn" v-if="isFinish">开始选择</div>
     </div>
 </template>
 
@@ -28,6 +31,7 @@
         methods: {
             getData(){
               let list=[];
+              let that = this;
               let version = window.localStorage.getItem('version');
               window.indexedDB.open('stuName',version).onsuccess=function (e) {
                   e.target.result.transaction('student','readwrite')
@@ -39,12 +43,13 @@
                         list.push(cursor.value);
                         cursor.continue();
                     }else {
-//                        vue.$data.isFinish = true;
-//                        vue.$data.stuList = list;
+                        console.log(list);
+                        console.log("++++++++++++++++");
+                        that.isFinish = true;
+                        that.stuList = list;
                     }
                   }
               };
-//              console.log(this);
             }
         }
     };
@@ -57,7 +62,15 @@
       height: 100%;
       .content{
         width: 100%;
-        height: 100%;
+        height: 95%;
+        .stu-content{
+          display: inline-block;
+          width: 25%;
+          height: 85px;
+        }
+      }
+      .check-btn{
+
       }
     }
 </style>
