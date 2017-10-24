@@ -4,7 +4,7 @@
 <template>
     <div class="home">
       <div class="content" v-if="isFinish">
-        <div class="stu-content"  v-for="item in stuList">
+        <div class="stu-content"  v-for="(item,index) in stuList" :key="item.index">
           <p>{{item.name}}</p>
           <p>{{item.index}}</p>
         </div>
@@ -23,8 +23,9 @@
         props: {},
         data(){
             return {
-            stuList:[],
-            isFinish:false,
+              stuList:[],
+              chanceStuList:[],
+              isFinish:false,
             }
         },
         computed: {},
@@ -50,7 +51,21 @@
                     }
                   }
               };
-            }
+            },
+            randomStu(){
+              this.shuffle(this.stuList);
+              this.chanceStuList = this.stuList.slice(0,5);
+            },
+            shuffle(a) { //数组乱序
+              var len = a.length;
+              for (var i = 0; i < len - 1; i++) {
+              var index = parseInt(Math.random() * (len - i));
+              var temp = a[index];
+              a[index] = a[len - i - 1];
+              a[len - i - 1] = temp;
+              }
+            },
+
         }
     };
 </script>

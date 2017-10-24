@@ -76,7 +76,7 @@ devMiddleware.waitUntilValid(() => {
   // when env is testing, don't need open it
   if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
     // opn(uri)
-    // 这儿不需要打开浏览器，只用打开 nw 就行
+    // todo 这儿不需要打开浏览器，只用打开 nw 就行
     require('./dev-nw')
   }
   _resolve()
