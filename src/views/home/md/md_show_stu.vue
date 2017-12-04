@@ -4,8 +4,9 @@
 <template>
     <div id="addStudent">
         <div class="addContent">
-          <p class="title">请添加学生姓名（姓名以'；'结尾）</p>
-          <textarea class="addName" v-model="msg"></textarea>
+          <span class="content" v-for="(item,index) in stuList">
+            {{item.name}}
+          </span>
           <div class="btn" @click="toSure()">确定</div>
         </div>
     </div>
@@ -17,16 +18,18 @@
         components: {},
         created(){
         },
-        props: {},
-        data(){
-            return {
-                msg:''
+        props: {
+            stuList:{
+                type:Array,
             }
+        },
+        data(){
+            return {}
         },
         computed: {},
         methods: {
             toSure(){
-              this.$emit('sure',this.msg);
+              this.$emit('sure');
             }
         }
     };
@@ -48,19 +51,13 @@
         background-color: white;
         border: 10px solid seagreen;
         .title{
-          font-size: 16px;
-        }
-        .addName{
-          width: 90%;
-          height: 60%;
-          margin: 10px 25px;
-          overflow: auto;
+          font-size: 24px;
         }
         .btn{
           @include center;
           width: 90px;
           height: 40px;
-          margin: 0 auto;
+          margin: 170px auto 10px;
           background-color: #4BC6FF;
         }
       }
