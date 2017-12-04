@@ -4,9 +4,11 @@
 <template>
     <div id="addStudent">
         <div class="addContent">
-          <span class="content" v-for="(item,index) in stuList">
-            {{item.name}}
-          </span>
+          <div class="content">
+              <span class="item" v-for="(item,index) in stuList">
+                {{item.name}}
+              </span>
+          </div>
           <div class="btn" @click="toSure()">确定</div>
         </div>
     </div>
@@ -46,18 +48,25 @@
       left: 0;
       z-index: 9999;
       .addContent{
+        position: relative;
         width: 500px;
         height: 250px;
         background-color: white;
         border: 10px solid seagreen;
-        .title{
+        .content{
+          @include center;
           font-size: 24px;
+          width: 100%;
+          height: 180px;
+          .item{
+            margin-left: 10px;
+          }
         }
         .btn{
           @include center;
           width: 90px;
           height: 40px;
-          margin: 170px auto 10px;
+          margin: 0 auto;
           background-color: #4BC6FF;
         }
       }
