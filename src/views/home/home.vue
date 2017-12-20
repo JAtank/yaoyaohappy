@@ -55,7 +55,7 @@
               };
             },
             randomStu(){
-              let currentList = this.stuList;
+              let currentList = Array.from(this.stuList);
               this.shuffle(currentList);
               if(!currentList.length){
                   return;
