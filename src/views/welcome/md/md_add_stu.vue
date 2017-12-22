@@ -42,13 +42,16 @@
       top:0;
       left: 0;
       z-index: 9999;
+      background: rgba(0, 0, 0, 0.6);
       .addContent{
         width: 500px;
         height: 250px;
         background-color: white;
-        border: 10px solid seagreen;
+        border: 5px solid cornflowerblue;
+        padding: 10px;
         .title{
           font-size: 16px;
+          color: cornflowerblue;
         }
         .addName{
           width: 90%;
@@ -61,7 +64,9 @@
           width: 90px;
           height: 40px;
           margin: 0 auto;
-          background-color: #4BC6FF;
+          border-radius: 20px;
+          background-color: cornflowerblue;
+          color: white;
         }
       }
     }

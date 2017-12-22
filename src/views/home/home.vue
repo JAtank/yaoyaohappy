@@ -3,10 +3,14 @@
 */
 <template>
     <div class="home">
+      <div class="peopleNum">
+        <span>请输入提问的学生人数：</span>
+        <input placeholder="输入希望挑选学生人数" v-model="num" type="number">
+      </div>
       <div class="content" v-if="isFinish">
         <div class="stu-content"  v-for="(item,index) in stuList" :key="item.index">
           <p>{{item.name}}</p>
-          <p>{{item.index}}</p>
+          <p>序号：{{item.index+1}}</p>
         </div>
       </div>
       <div class="check-btn" v-if="isFinish" @click="toShowMd">开始选择</div>
@@ -28,7 +32,8 @@
               stuList:[],
               chanceStuList:[],
               isFinish:false,
-              isShowMd:false
+              isShowMd:false,
+              num:0,
             }
         },
         computed: {},
@@ -57,19 +62,7 @@
             randomStu(){
               let currentList = Array.from(this.stuList);
               this.shuffle(currentList);
-              if(!currentList.length){
-                  return;
-              }
-              if(currentList.length<=3){
-                this.chanceStuList = currentList.slice(0,1);
-              }else if(currentList.length<=10){
-                this.chanceStuList = currentList.slice(0,2);
-              }else if(currentList.length<=30){
-                this.chanceStuList = currentList.slice(0,3);
-              }else {
-                this.chanceStuList = currentList.slice(0,5);
-              }
-
+              this.chanceStuList = currentList.slice(0, this.num);
             },
             shuffle(a) { //数组乱序
               var len = a.length;
@@ -81,6 +74,17 @@
               }
             },
             toShowMd(){
+              if(!this.stuList.length){
+                return;
+              }
+              if(this.num<=0){
+                alert("请先输入正确提问人数！！");
+                return
+              }
+              if(this.num>this.stuList.length){
+                alert("提问人数大于实际人数！！");
+                return;
+              }
               this.randomStu();
               this.isShowMd = true;
             }
@@ -93,19 +97,53 @@
     .home{
       width: 100%;
       height: 100%;
+      padding: 10px;
+      background-color: wheat;
+      .peopleNum{
+        margin-left: 20px;
+        color: #666;
+        ::-webkit-input-placeholder {
+          color: #BEBEBE;
+          font-size: 14px;
+        }
+        :-moz-placeholder {
+          color: #BEBEBE;
+          font-size: 14px;
+        }
+        ::-moz-placeholder {
+          color: #BEBEBE;
+          font-size: 14px;
+        }
+        :-ms-input-placeholder {
+          color: #BEBEBE;
+          font-size: 14px;
+        }
+      }
       .content{
         width: 100%;
-        max-height: 95%;
+        max-height: 87%;
         overflow: auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        margin-top: 10px;
+        color: #666;
         .stu-content{
           display: inline-block;
           width: 25%;
           height: 85px;
+          text-align: center;
         }
       }
       .check-btn{
-        width: 70px;
-        margin: 0 auto ;
+        width: 90px;
+        height: 40px;
+        margin: 10px auto ;
+        padding-top: 8px;
+        background-color: cornflowerblue;
+        border-radius: 20px;
+        text-align: center;
+        color: white;
       }
     }
 </style>

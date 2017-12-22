@@ -6,7 +6,9 @@
         <div class="addContent">
           <div class="content">
               <span class="item" v-for="(item,index) in stuList">
-                {{item.name}}
+                <span>{{item.name}}</span>
+                <br/>
+                <span style="font-size: 12px;">序号：{{item.index+1}}</span>
               </span>
           </div>
           <div class="btn" @click="toSure()">确定</div>
@@ -47,27 +49,38 @@
       top:0;
       left: 0;
       z-index: 9999;
+      background: rgba(0, 0, 0, 0.6);
       .addContent{
         position: relative;
         width: 500px;
         height: 250px;
         background-color: white;
-        border: 10px solid seagreen;
+        border: 5px solid cornflowerblue;
+        padding: 10px;
         .content{
           @include center;
-          font-size: 24px;
+          flex-wrap: wrap;
+          font-size: 20px;
           width: 100%;
           height: 180px;
+          padding: 5px;
+          border: cornflowerblue 1px solid;
+          border-radius: 10px;
+          color: #666;
+          overflow: auto;
           .item{
             margin-left: 10px;
+            text-align: center;
           }
         }
         .btn{
           @include center;
           width: 90px;
           height: 40px;
-          margin: 0 auto;
-          background-color: #4BC6FF;
+          margin: 5px auto;
+          border-radius: 20px;
+          background-color: cornflowerblue;
+          color: white;
         }
       }
     }

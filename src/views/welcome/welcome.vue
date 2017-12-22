@@ -141,22 +141,23 @@
     .welcome{
       width: 100%;
       height: 100%;
+      background: url("../../assets/image/welcom_bg.png") no-repeat center;
+      background-size: 100% 100%;
       .up{
         @include center;
         width: 100%;
         height: 50%;
-        background-color: #0F8DBD;
         color: white;
         .entering{
           width: 80px;
-          border: 1px solid white;
+          border: 1px solid cornflowerblue;
           border-radius: 15px;
           text-align: center;
         }
         .import{
           position: relative;
           width: 80px;
-          border: 1px solid white;
+          border: 1px solid cornflowerblue;
           border-radius: 15px;
           text-align: center;
           margin-left: 60px;
@@ -174,10 +175,10 @@
         @include center;
         width: 100%;
         height: 50%;
-        background-color: #7480E2;
+        color: white;
         .down-btn{
           font-size: 18px;
-          background-color: white;
+          background-color: cornflowerblue;
           padding: 10px;
           border-radius: 20px;
         }
