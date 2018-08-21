@@ -1,6 +1,6 @@
 # yaoyaohappy
 
-> A Vue.js project
+> 一个帮助老师选择提问对象的小工具，可通过excel表格导入学生姓名
 
 ## Build Setup
 
